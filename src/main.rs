@@ -1,8 +1,8 @@
-use std::io;
 use std::collections::HashMap;
+use std::io;
 
 #[derive(Debug)]
-enum OrderType{
+enum OrderType {
     Add(AddOrder),
     List(ListOrder),
 }
@@ -43,22 +43,22 @@ impl ListOrder {
         // 全社員を出力する場合
         if self.department == "All".to_string() {
             for (key, _) in map.iter() {
-                let mut vec: Vec<String> = match map.get(key){
+                let mut vec: Vec<String> = match map.get(key) {
                     Some(v) => v.to_vec(),
                     None => Vec::new(),
                 };
                 self.print_names(key, &vec);
             }
-            return ()
+            return ();
         }
-        let vec: Vec<String> = match map.get(&self.department){
+        let vec: Vec<String> = match map.get(&self.department) {
             Some(v) => v.to_vec(),
             None => Vec::new(),
         };
         // 指定された部署が存在しない場合
         if vec.len() == 0 {
             println!("No one is registered at {}", self.department);
-            return ()
+            return ();
         }
         // 指定された部署のみ出力する場合
         self.print_names(&self.department, &vec);
@@ -86,7 +86,7 @@ fn main() {
             Some(ord) => match ord {
                 OrderType::Add(add) => add.exec(&mut employees),
                 OrderType::List(list) => list.exec(&employees),
-            }
+            },
         }
     }
 }
@@ -111,17 +111,22 @@ fn parse_line(words: &Vec<&str>) -> Option<OrderType> {
 
 fn parse_add(order: &Vec<&str>) -> Option<AddOrder> {
     if order.len() != 4 {
-        return None
+        return None;
     }
     if order[2] != "to" {
-        return None
+        return None;
     }
-    Some(AddOrder { name: order[1].to_string(), department: order[3].trim().to_string()})
+    Some(AddOrder {
+        name: order[1].to_string(),
+        department: order[3].trim().to_string(),
+    })
 }
 
 fn parse_list(order: &Vec<&str>) -> Option<ListOrder> {
     if order.len() != 2 {
-        return None
+        return None;
     }
-    Some(ListOrder {department: order[1].trim().to_string()})
+    Some(ListOrder {
+        department: order[1].trim().to_string(),
+    })
 }
