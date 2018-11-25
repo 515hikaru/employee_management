@@ -1,0 +1,6 @@
+[package]
+name = "employee_management"
+version = "0.1.0"
+authors = ["515hikaru <12kojima.takahiro@gmail.com>"]
+
+[dependencies]
